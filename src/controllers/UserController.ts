@@ -16,18 +16,18 @@ export class UserController {
   }
 
   public async getAllUsers(req: Request, res: Response): Promise<void> {
+    let users;
     const queryRequest: {} = req.query;
-    if (Object.keys(queryRequest).length === 0) {
-      try {
-        const users = await this.userService.getAllUsers();
-        res.json(users);
-      } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Internal Server Error" });
+    try {
+      if (Object.keys(queryRequest).length === 0) {
+        users = await this.userService.getAllUsers();
+      } else {
+        users = await this.userService.getUsersFiltedBy(queryRequest);
       }
-    } else {
-      const users = await this.userService.getUsersFiltedBy(queryRequest);
       res.json(users);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Internal Server Error" });
     }
   }
 
