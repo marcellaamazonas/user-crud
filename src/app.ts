@@ -1,8 +1,8 @@
 import "reflect-metadata";
 import express from "express";
 import userRoutes from "./routes/userRoutes";
-// const swaggerUi = require("swagger-ui-express");
-// const swaggerDocument = require("../swagger.json");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger-output.json");
 const cors = require("cors");
 
 const app = express();
@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 // // Configuração do Swagger UI
-// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Rotas
 app.use("/users", userRoutes);
